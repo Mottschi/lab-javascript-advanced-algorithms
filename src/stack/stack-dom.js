@@ -44,20 +44,40 @@ const generateWarningStack = type => {
 };
 
 const addToStack = () => {
-  if (newStack.push(stackInput.value) === 'Stack Overflow') {
-    generateWarningStack('overflow');
-  } else {
-    clearStackInput();
-    renderListStack();
+  try {
+    newStack.push(stackInput.value)
+  } catch (error){
+    if (error.message === 'STACK_OVERFLOW') generateWarningStack('overflow');
+    return;
   }
+  clearStackInput();
+  renderListStack();
+
+  // leaving the starter code below
+  // had to be adjusted as the starter code way to find stack overflows 
+  // did not actually work, as we are throwing an error, not returning a string
+  // if (newStack.push(stackInput.value) === 'Stack Overflow') {
+  //   generateWarningStack('overflow');
+  // } else {
+  //   clearStackInput();
+  //   renderListStack();
+  // }
 };
 
 const removeFromStack = () => {
-  if (newStack.pop() === 'Stack Underflow') {
-    generateWarningStack('underflow');
-  } else {
-    renderListStack();
+  try {
+    newStack.pop()
+  } catch (error){
+    if (error.message === 'STACK_UNDERFLOW') generateWarningStack('underflow');
+    return;
   }
+  renderListStack();
+
+  // if (newStack.pop() === 'Stack Underflow') {
+  //   generateWarningStack('underflow');
+  // } else {
+  //   renderListStack();
+  // }
 };
 
 addStackBtn.addEventListener('click', addToStack);
